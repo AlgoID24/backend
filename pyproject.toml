@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "algoid-backend"
+version = "0.1.0"
+description = ""
+authors = ["Ezekiel Victor <codeepoch@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+strawberry-graphql = {extras = ["fastapi"], version = "^0.247.1"}
+pydantic-settings = "^2.6.1"
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.36"}
+alembic = "^1.13.3"
+psycopg2-binary = "^2.9.10"
+asyncpg = "^0.30.0"
+bcrypt = "^4.2.0"
+uvicorn = "^0.32.0"
+pyjwt = {extras = ["crypto"], version = "^2.9.0"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
