@@ -63,6 +63,7 @@ class UsersAuthMutations:
             auth_token = auth_token_result.scalar_one_or_none()
             if auth_token:
                 await session.delete(auth_token)
+                await session.commit()
             token_data = {
                 "exp": datetime.now() + settings.auth_token_token_valid_duration,
                 "iat": datetime.now(),
