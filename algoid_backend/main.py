@@ -10,7 +10,6 @@ from algoid_backend.config.schema import schema
 graphql_app = GraphQLRouter(schema=schema, context_getter=get_context)
 
 ALLOWED_HOSTS = settings.allowed_hosts.split(",")
-print(ALLOWED_HOSTS)
 
 app = FastAPI()
 app.add_middleware(

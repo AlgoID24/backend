@@ -16,6 +16,10 @@ asyncpg = "^0.30.0"
 bcrypt = "^4.2.0"
 uvicorn = "^0.32.0"
 pyjwt = {extras = ["crypto"], version = "^2.9.0"}
+didkit = "^0.3.3"
+cryptography = "^43.0.3"
+pinata-python = "^1.0.0"
+algokit-utils = "^2.3.2"
 
 
 [build-system]
