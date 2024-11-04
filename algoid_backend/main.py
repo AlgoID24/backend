@@ -9,10 +9,13 @@ from algoid_backend.config.schema import schema
 
 graphql_app = GraphQLRouter(schema=schema, context_getter=get_context)
 
+ALLOWED_HOSTS = settings.allowed_hosts.split(",")
+print(ALLOWED_HOSTS)
+
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.allowed_hosts.split(","),
+    allow_origins=ALLOWED_HOSTS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
