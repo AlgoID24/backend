@@ -67,7 +67,7 @@ class UsersAuthMutations:
                 "exp": datetime.now() + settings.auth_token_token_valid_duration,
                 "iat": datetime.now(),
                 "email": user.email,
-                "user_id": user.id,
+                "user_id": str(user.id),
             }
             token = jwt.encode(token_data, settings.secret_key.encode(), "HS256")
             auth_token = AuthToken(token=token, user_id=user.id)

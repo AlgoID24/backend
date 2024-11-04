@@ -2,7 +2,6 @@
 from typing import Any, Dict, Tuple, cast
 
 # from algosdk import transaction
-from graphql import GraphQLError
 from sqlalchemy import select
 import strawberry
 
@@ -24,9 +23,6 @@ class UsersMutations:
     ) -> Response[Tuple[ProfileType, JSON]]:
         async with sessionmanager.session() as session:
             user = await info.context.ensure_user()
-            assert user.id == input.user_id, GraphQLError(
-                "You are not authorized to perform this action"
-            )
             profile_res = await session.execute(
                 select(Profile).where(Profile.user_id == user.id)
             )

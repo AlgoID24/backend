@@ -9,6 +9,7 @@ from alembic import context
 
 from algoid_backend.config.settings import settings
 from algoid_backend.apps.users.models.users import *
+from algoid_backend.apps.users.models.auth import *
 from algoid_backend.config.db import Base
 
 # this is the Alembic Config object, which provides
