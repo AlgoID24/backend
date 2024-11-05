@@ -14,6 +14,7 @@ class Context(BaseContext):
     async def user(self) -> Optional[User]:
         if not self.request:
             return None
+        print(self.request.headers)
         authorization = self.request.headers.get("Authorization")
 
         if not authorization:

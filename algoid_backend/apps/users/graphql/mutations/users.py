@@ -1,14 +1,18 @@
-# import hashlib
-from typing import Any, Dict, Tuple, cast
+import hashlib
+from typing import Any, Dict, cast
 
-# from algosdk import transaction
+from algosdk import transaction
+from cryptography.hazmat.primitives import serialization
 from sqlalchemy import select
 import strawberry
 
-# from algoid_backend.apps.common.contract import Contract
+from algoid_backend.apps.common.contract import Contract
 from algoid_backend.apps.common.graphql.types.output import Response, ResponseStatus
 from algoid_backend.apps.common.graphql.types.scalars import JSON
-from algoid_backend.apps.users.graphql.types.outputs.users import ProfileType
+from algoid_backend.apps.users.graphql.types.outputs.users import (
+    ProfileType,
+    UpdateProfileResponse,
+)
 from algoid_backend.config.db import sessionmanager
 from algoid_backend.apps.users.graphql.types.input.users import UserProfileInput
 from algoid_backend.apps.users.models.users import Profile
@@ -20,7 +24,7 @@ class UsersMutations:
     @strawberry.mutation
     async def update_user_profile(
         self, info: Info, input: UserProfileInput
-    ) -> Response[Tuple[ProfileType, JSON]]:
+    ) -> Response[UpdateProfileResponse]:
         async with sessionmanager.session() as session:
             user = await info.context.ensure_user()
             profile_res = await session.execute(
@@ -80,17 +84,21 @@ class UsersMutations:
             #     user_address=Contract.live_account().address, asset=result.return_value
             # )
 
-            return Response[Tuple[ProfileType, JSON]](
+            return Response[UpdateProfileResponse](
                 status=ResponseStatus.SUCCESS,
                 message="Profile updated successfully",
-                data=(
-                    ProfileType.from_model(profile),
-                    cast(
+                data=UpdateProfileResponse(
+                    profile=ProfileType.from_model(profile),
+                    did=cast(
                         JSON,
                         {
                             "did": did,
                             "did_document": did_document,
-                            "private_key": private_key,
+                            "private_key": private_key.private_bytes(
+                                encoding=serialization.Encoding.PEM,
+                                format=serialization.PrivateFormat.PKCS8,
+                                encryption_algorithm=serialization.NoEncryption(),
+                            ).decode(),
                             "user_info_vc": user_info_vc,
                         },
                     ),

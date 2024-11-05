@@ -66,7 +66,6 @@ class UsersAuthMutations:
                 await session.commit()
             token_data = {
                 "exp": datetime.now() + settings.auth_token_token_valid_duration,
-                "iat": datetime.now(),
                 "email": user.email,
                 "user_id": str(user.id),
             }

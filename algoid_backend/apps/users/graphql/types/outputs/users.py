@@ -61,3 +61,9 @@ class ProfileType:
             date_added=model.date_added,
             last_updated=model.last_updated,
         )
+
+
+@strawberry.type
+class UpdateProfileResponse:
+    profile: ProfileType
+    did: JSON
